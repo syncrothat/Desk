@@ -16,7 +16,7 @@ function App() {
       if (selectedView === 'project') {
         try {
           const projectData = await fetchProjects();
-          setProjects(projectData.data);  // Set the project data
+          setProjects(projectData.data);
         } catch (error) {
           console.error('Error loading projects:', error);
         }

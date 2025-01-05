@@ -20,27 +20,18 @@ const ProjectList = () => {
 
   return (
     <div>
-      <h1>Projects</h1>
-      <ul>
+      <h1 className="text-2xl font-bold mb-4">Projects</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {projects.map((project) => (
-          <li key={project.projectid}>
-            <h2>{project.project_name}</h2>
-            <p>{project.description}</p>
-            <p>Owner ID: {project.ownerid}</p>
-            <p>Created At: {new Date(project.created_at).toLocaleString()}</p>
-            <p>Updated At: {new Date(project.updated_at).toLocaleString()}</p>
-            <h3>Members</h3>
-            <ul>
-              {project.members.map((member) => (
-                <li key={member.userid}>
-                  <p>Role: {member.role}</p>
-                  <p>Is Admin: {member.is_admin ? 'Yes' : 'No'}</p>
-                </li>
-              ))}
-            </ul>
-          </li>
+          <div
+            key={project.projectid}
+            className="bg-white rounded-lg shadow-md p-4 border border-gray-200"
+          >
+            <h2 className="text-lg font-semibold mb-2">{project.project_name}</h2>
+            <p className="text-gray-700">{project.description}</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
