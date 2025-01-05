@@ -1,6 +1,6 @@
 // src/apiService.js
 import axios from 'axios';
-import Cookies from 'js-cookie';
+import Token from './Token';
 
 const baseAPIURL = 'https://api.sync.buxxed.me';
 
@@ -9,7 +9,7 @@ let myTask = `${baseAPIURL}/api/protected/accounts/task`;
 
 export const fetchProjects = async () => {
   try {
-    const token = Cookies.get('token');
+    const token = Token;
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     const response = await axios.get(myProject, { headers });
     return response.data;
@@ -21,7 +21,7 @@ export const fetchProjects = async () => {
 
 export const fetchTasks = async () => {
   try {
-    const token = Cookies.get('token');
+    const token = Token;
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     const response = await axios.get(myTask, { headers });
     return response.data;
