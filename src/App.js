@@ -39,7 +39,7 @@ function App() {
         className="toggle-sidebar-btn"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
-        {isSidebarOpen ? 'Close Menu' : 'Open Menu'}
+        {isSidebarOpen ? <span className="material-icons text-base">close</span> : <span className="material-icons text-base">menu</span>}
       </button>
 
       {/* Sidebar container */}
@@ -51,13 +51,12 @@ function App() {
       <div className="main-content">
         {selectedView === 'project' && (
           <>
-            <h1>Project</h1>
             <ProjectList projects={projects} />
           </>
         )}
         {selectedView === 'task' && (
           <div>
-            <h1>Task Data</h1>
+            <h1 className="text-2xl font-bold mb-4">Tasks</h1>
             <ul>
               {tasks.map((task) => (
                 <li key={task.taskid}>

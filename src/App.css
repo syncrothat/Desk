@@ -24,6 +24,18 @@ body {
   z-index: 100;
 }
 
+.sidebar-menu {
+  background-color: #444;
+  color: #fff;
+  text-align: start;
+  display: flex;
+  align-items: center;
+}
+  
+.sidebar-icons {
+  margin-right: 8px;
+}
+
 .sidebar-container.open {
   transform: translateX(0);
 }
@@ -32,7 +44,7 @@ body {
   .sidebar-container {
     position: static;
     width: 250px;
-    transform: translateX(0); /* Sidebar always visible on desktop */
+    transform: translateX(0);
     z-index: 0;
   }
 }
@@ -48,7 +60,11 @@ body {
 @media (max-width: 1023px) {
   .sidebar {
     display: flex;
-    padding-top: 60px;
+    padding-top: 96px;
+  }
+
+  .app {
+    margin-top: 64px;
   }
 }
 
@@ -57,7 +73,7 @@ body {
   top: 15px;
   left: 15px;
   z-index: 150;
-  background-color: #007bff;
+  background-color: #333;
   color: white;
   border: none;
   border-radius: 5px;
@@ -69,7 +85,7 @@ body {
 @media (min-width: 1024px) {
   .toggle-sidebar-btn {
     display: none;
-  }
+  }  
 }
 
 .main-content {
