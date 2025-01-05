@@ -1,15 +1,14 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
-import './App.css';  // Ensure this line is present
+import './App.css';
 import Sidebar from './Sidebar';
-import ProjectList from './ProjectList';  // Your existing ProjectList component
-import { fetchProjects } from './apiService';  // API call for project data
-import { fetchTasks } from './apiService';  // API call for task data
+import ProjectList from './ProjectList';
+import { fetchProjects, fetchTasks } from './apiService';
 
 function App() {
-  const [selectedView, setSelectedView] = useState('project'); // Default to "project"
+  const [selectedView, setSelectedView] = useState('project');
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar visibility state
 
   useEffect(() => {
     const loadData = async () => {
@@ -23,7 +22,7 @@ function App() {
       } else if (selectedView === 'task') {
         try {
           const taskData = await fetchTasks();
-          setTasks(taskData.data);  // Set the task data
+          setTasks(taskData.data);
         } catch (error) {
           console.error('Error loading tasks:', error);
         }
@@ -35,10 +34,27 @@ function App() {
 
   return (
     <div className="app">
-      <Sidebar onSelect={setSelectedView} />
+      {/* Sidebar toggle button */}
+      <button
+        className="toggle-sidebar-btn"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        {isSidebarOpen ? 'Close Menu' : 'Open Menu'}
+      </button>
 
+      {/* Sidebar container */}
+      <div className={`sidebar-container ${isSidebarOpen ? 'open' : ''}`}>
+        <Sidebar onSelect={setSelectedView} />
+      </div>
+
+      {/* Main content */}
       <div className="main-content">
-        {selectedView === 'project' && <ProjectList projects={projects} />}
+        {selectedView === 'project' && (
+          <>
+            <h1>Project</h1>
+            <ProjectList projects={projects} />
+          </>
+        )}
         {selectedView === 'task' && (
           <div>
             <h1>Task Data</h1>
