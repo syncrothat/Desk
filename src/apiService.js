@@ -4,8 +4,8 @@ import Token from './Token';
 
 const baseAPIURL = 'https://api.sync.buxxed.me';
 
-let myProject = `${baseAPIURL}/api/protected/accounts/project`;
-let myTask = `${baseAPIURL}/api/protected/accounts/task`;
+const myProject = `${baseAPIURL}/api/protected/accounts/project`;
+const myTask = `${baseAPIURL}/api/protected/accounts/task`;
 
 export const fetchProjects = async () => {
   try {
