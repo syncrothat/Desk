@@ -1,6 +1,5 @@
-// src/apiService.js
 import axios from 'axios';
-import Token from './Token';
+import Token from '../config/Token';
 
 const baseAPIURL = 'https://api.sync.buxxed.me';
 

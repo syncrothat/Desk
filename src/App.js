@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import Sidebar from './Sidebar';
-import ProjectList from './ProjectList';
-import { fetchProjects, fetchTasks } from './apiService';
+import './style/App.css';
+import Sidebar from './utils/Sidebar';
+import ProjectList from './controller/Projects';
+import { fetchProjects, fetchTasks } from './utils/apiService';
 
 function App() {
   const [selectedView, setSelectedView] = useState('project');
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar visibility state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {

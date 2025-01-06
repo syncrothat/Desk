@@ -1,6 +1,6 @@
 // src/ProjectList.js
 import React, { useEffect, useState } from 'react';
-import { fetchProjects } from './apiService';
+import { fetchProjects } from '../utils/apiService';
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
