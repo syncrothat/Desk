@@ -6,7 +6,7 @@ import TasksList from './controller/Tasks';
 import { fetchProjects, fetchTasks } from './utils/apiService';
 
 function App() {
-  const [selectedView, setSelectedView] = useState('project');
+  const [selectedView, setSelectedView] = useState('home');
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -49,7 +49,11 @@ function App() {
         className="toggle-sidebar-btn"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
-        {isSidebarOpen ? <span className="material-icons text-base">close</span> : <span className="material-icons text-base">menu</span>}
+        {isSidebarOpen ? (
+          <span className="material-icons text-base">close</span>
+        ) : (
+          <span className="material-icons text-base">menu</span>
+        )}
       </button>
 
       {/* Sidebar container */}
@@ -65,16 +69,8 @@ function App() {
             <TasksList tasks={tasks} />
           </>
         )}
-        {selectedView === 'project' && (
-          <>
-            <ProjectList projects={projects} />
-          </>
-        )}
-        {selectedView === 'task' && (
-          <>
-          <TasksList tasks={tasks} />
-          </>
-        )}
+        {selectedView === 'project' && <ProjectList projects={projects} />}
+        {selectedView === 'task' && <TasksList tasks={tasks} />}
       </div>
     </div>
   );
