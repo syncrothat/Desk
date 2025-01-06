@@ -32,3 +32,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 - js-cookie
 - Roboto Fonts
 - Axios
+- Matrial Incons (Google Fonts)
