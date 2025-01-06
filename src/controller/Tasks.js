@@ -8,7 +8,6 @@ const TaskList = () => {
     const getTasks = async () => {
       try {
         const data = await fetchTasks();
-        // The API response has a structure with `data` containing projects and their tasks.
         const projectData = Object.keys(data.data).map((key) => ({
           projectID: key,
           projectName: data.data[key].projectName,
@@ -23,6 +22,24 @@ const TaskList = () => {
     getTasks();
   }, []);
 
+  const formatDate = (date) => {
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    return formatter.format(new Date(date));
+  };
+
+  const isDeadlineNear = (deadline) => {
+    const now = new Date();
+    const deadlineDate = new Date(deadline);
+    const timeDifference = deadlineDate - now;
+    return timeDifference > 0 && timeDifference <= 24 * 60 * 60 * 1000;
+  };
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">My Tasks</h1>
@@ -35,10 +52,19 @@ const TaskList = () => {
                 key={task.taskid}
                 className="bg-white rounded-xl shadow-md p-4 border border-gray-200"
               >
-                <h3 className="text-lg font-semibold mb-2">{task.title}</h3>
+                <h3 className="text-lg font-semibold mb-1">{task.title}</h3>
                 <p className="text-gray-700 mb-2">{task.description}</p>
-                <p className="text-sm text-gray-500">Deadline: {new Date(task.deadline).toLocaleDateString()}</p>
-                <p className="text-sm text-gray-500">Created At: {new Date(task.created_at).toLocaleDateString()}</p>
+                <p className="text-xs text-gray-500 mb-2">
+                  Created At {formatDate(task.created_at)}
+                </p>
+
+                <p
+                  className={`text-xs ${
+                    isDeadlineNear(task.deadline) ? 'text-red-500' : 'text-gray-500'
+                  }`}
+                >
+                  Deadline {formatDate(task.deadline)}
+                </p>
               </div>
             ))}
           </div>
