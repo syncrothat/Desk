@@ -13,7 +13,16 @@ function App() {
 
   useEffect(() => {
     const loadData = async () => {
-      if (selectedView === 'project') {
+      if (selectedView === 'home') {
+        try {
+          const projectData = await fetchProjects();
+          const taskData = await fetchTasks();
+          setProjects(projectData.data);
+          setTasks(taskData.data);
+        } catch (error) {
+          console.error('Error loading projects and tasks:', error);
+        }
+      } else if (selectedView === 'project') {
         try {
           const projectData = await fetchProjects();
           setProjects(projectData.data);
@@ -50,6 +59,12 @@ function App() {
 
       {/* Main content */}
       <div className="main-content">
+        {selectedView === 'home' && (
+          <>
+            <ProjectList projects={projects} />
+            <TasksList tasks={tasks} />
+          </>
+        )}
         {selectedView === 'project' && (
           <>
             <ProjectList projects={projects} />
@@ -58,8 +73,7 @@ function App() {
         {selectedView === 'task' && (
           <>
           <TasksList tasks={tasks} />
-        </>
-
+          </>
         )}
       </div>
     </div>
