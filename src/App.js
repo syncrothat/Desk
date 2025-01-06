@@ -61,7 +61,7 @@ function App() {
               <h1 className="text-2xl font-bold">Home</h1>
             </div>
             <div className="my-4">
-              <MyInfoView />
+              <MyInfoView myInfo={myInfo} />
             </div>
             <div className="my-4">
               <h1 className="text-xl font-bold mb-4">My Projects</h1>
