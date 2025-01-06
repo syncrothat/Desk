@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './style/App.css';
 import Sidebar from './utils/Sidebar';
-import ProjectList from './controller/Projects';
-import TasksList from './controller/Tasks';
+import ProjectList from './view/Projects';
+import TasksList from './view/Tasks';
 import { fetchProjects, fetchTasks } from './utils/apiService';
 
 function App() {
