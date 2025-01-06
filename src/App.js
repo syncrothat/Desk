@@ -3,39 +3,34 @@ import './style/App.css';
 import Sidebar from './utils/Sidebar';
 import ProjectList from './view/Projects';
 import TasksList from './view/Tasks';
-import { fetchProjects, fetchTasks } from './utils/apiService';
+import MyInfoView from './view/Summary';
+import { fetchProjects, fetchTasks, fetchMyInfo } from './utils/apiService';
 
 function App() {
   const [selectedView, setSelectedView] = useState('home');
   const [projects, setProjects] = useState([]);
+  const [myInfo, setMyInfo] = useState({});
   const [tasks, setTasks] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
-      if (selectedView === 'home') {
-        try {
-          const projectData = await fetchProjects();
-          const taskData = await fetchTasks();
-          setProjects(projectData.data);
-          setTasks(taskData.data);
-        } catch (error) {
-          console.error('Error loading projects and tasks:', error);
+      try {
+        let data;
+        if (selectedView === 'home') {
+          data = await Promise.all([fetchMyInfo(), fetchProjects(), fetchTasks()]);
+          setMyInfo(data[0]);
+          setProjects(data[1].data);
+          setTasks(data[2].data);
+        } else if (selectedView === 'project') {
+          data = await fetchProjects();
+          setProjects(data.data);
+        } else if (selectedView === 'task') {
+          data = await fetchTasks();
+          setTasks(data.data);
         }
-      } else if (selectedView === 'project') {
-        try {
-          const projectData = await fetchProjects();
-          setProjects(projectData.data);
-        } catch (error) {
-          console.error('Error loading projects:', error);
-        }
-      } else if (selectedView === 'task') {
-        try {
-          const taskData = await fetchTasks();
-          setTasks(taskData.data);
-        } catch (error) {
-          console.error('Error loading tasks:', error);
-        }
+      } catch (error) {
+        console.error('Error loading data:', error);
       }
     };
 
@@ -44,7 +39,6 @@ function App() {
 
   return (
     <div className="app">
-      {/* Sidebar toggle button */}
       <button
         className="toggle-sidebar-btn"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -56,17 +50,18 @@ function App() {
         )}
       </button>
 
-      {/* Sidebar container */}
       <div className={`sidebar-container ${isSidebarOpen ? 'open' : ''}`}>
         <Sidebar onSelect={setSelectedView} />
       </div>
 
-      {/* Main content */}
       <div className="main-content">
         {selectedView === 'home' && (
           <>
             <div className="my-4">
               <h1 className="text-2xl font-bold">Home</h1>
+            </div>
+            <div className="my-4">
+              <MyInfoView />
             </div>
             <div className="my-4">
               <h1 className="text-xl font-bold mb-4">My Projects</h1>
@@ -84,7 +79,6 @@ function App() {
               <h1 className="text-2xl font-bold">My Projects</h1>
               <ProjectList projects={projects} />
             </div>
-
           </>
         )}
         {selectedView === 'task' && (
