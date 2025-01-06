@@ -65,12 +65,36 @@ function App() {
       <div className="main-content">
         {selectedView === 'home' && (
           <>
-            <ProjectList projects={projects} />
-            <TasksList tasks={tasks} />
+            <div className="my-4">
+              <h1 className="text-2xl font-bold">Home</h1>
+            </div>
+            <div className="my-4">
+              <h1 className="text-xl font-bold mb-4">My Projects</h1>
+              <ProjectList projects={projects} />
+            </div>
+            <div className="my-4">
+              <h1 className="text-xl font-bold mb-4">My Tasks</h1>
+              <TasksList tasks={tasks} />
+            </div>
           </>
         )}
-        {selectedView === 'project' && <ProjectList projects={projects} />}
-        {selectedView === 'task' && <TasksList tasks={tasks} />}
+        {selectedView === 'project' && (
+          <>
+            <div className="my-4">
+              <h1 className="text-2xl font-bold">My Projects</h1>
+              <ProjectList projects={projects} />
+            </div>
+
+          </>
+        )}
+        {selectedView === 'task' && (
+          <>
+            <div className="my-4">
+              <h1 className="text-2xl font-bold">My Tasks</h1>
+              <TasksList tasks={tasks} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

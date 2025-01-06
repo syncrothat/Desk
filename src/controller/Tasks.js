@@ -42,10 +42,9 @@ const TaskList = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">My Tasks</h1>
       {projects.map((project) => (
         <div key={project.projectID} className="mb-6">
-          <h2 className="text-xl font-bold mb-3">{project.projectName}</h2>
+          <h2 className="text-md font-bold mb-3">{project.projectName}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {project.tasks.map((task) => (
               <div
