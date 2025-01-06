@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './style/App.css';
 import Sidebar from './utils/Sidebar';
 import ProjectList from './controller/Projects';
+import TasksList from './controller/Tasks';
 import { fetchProjects, fetchTasks } from './utils/apiService';
 
 function App() {
@@ -55,17 +56,10 @@ function App() {
           </>
         )}
         {selectedView === 'task' && (
-          <div>
-            <h1 className="text-2xl font-bold mb-4">Tasks</h1>
-            <ul>
-              {tasks.map((task) => (
-                <li key={task.taskid}>
-                  <h3>{task.task_name}</h3>
-                  <p>{task.description}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <>
+          <TasksList tasks={tasks} />
+        </>
+
         )}
       </div>
     </div>
