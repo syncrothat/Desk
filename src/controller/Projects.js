@@ -25,10 +25,14 @@ const ProjectList = () => {
         {projects.map((project) => (
           <div
             key={project.projectid}
-            className="bg-white rounded-lg shadow-md p-4 border border-gray-200"
+            className="bg-white rounded-xl shadow-md p-4 border border-gray-200"
           >
             <h2 className="text-lg font-semibold mb-2">{project.project_name}</h2>
-            <p className="text-gray-700">{project.description}</p>
+            <p className="text-gray-700 mb-2">{project.description}</p>
+            <div className="text-gray-500">
+                <span className="material-icons sidebar-icons text-base">person_outline</span><span className="text-base pr-6">{project.members_count}</span>
+                <span className="material-icons sidebar-icons text-base">sort</span><span className="text-base">{project.tasks_count}</span>
+            </div>
           </div>
         ))}
       </div>
