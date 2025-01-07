@@ -51,8 +51,8 @@ function App() {
       </button>
 
       <div className={`sidebar-container ${isSidebarOpen ? 'open' : ''}`}>
-        <Sidebar onSelect={setSelectedView} />
-      </div>
+        <Sidebar onSelect={setSelectedView} setIsSidebarOpen={setIsSidebarOpen} />
+        </div>
 
       <div className="main-content">
         {selectedView === 'home' && (

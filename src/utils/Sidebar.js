@@ -1,17 +1,31 @@
 import React from 'react';
 import logo from '../assets/logo/white-no-bg.png';
 
-const Sidebar = ({ onSelect }) => {
+const Sidebar = ({ onSelect, setIsSidebarOpen }) => {
+  const handleMenuClick = (view) => {
+    onSelect(view);
+    setIsSidebarOpen(false);
+  };
+
   return (
     <div className="sidebar">
-        <img className='w-12 h-auto' src={logo} alt="Logo" />
-        <button className='py-2 px-4 rounded-b-lg sidebar-menu' onClick={() => onSelect('home')}>
+      <img className='w-12 h-auto' src={logo} alt="Logo" />
+      <button
+        className='py-2 px-4 rounded-b-lg sidebar-menu'
+        onClick={() => handleMenuClick('home')}
+      >
         <span className="material-icons sidebar-icons text-base">home</span>Home
       </button>
-      <button className='py-2 px-4 rounded-b-lg sidebar-menu' onClick={() => onSelect('project')}>
+      <button
+        className='py-2 px-4 rounded-b-lg sidebar-menu'
+        onClick={() => handleMenuClick('project')}
+      >
         <span className="material-icons sidebar-icons text-base">work</span>Projects
       </button>
-      <button className='py-2 px-4 rounded-b-lg sidebar-menu' onClick={() => onSelect('task')}>
+      <button
+        className='py-2 px-4 rounded-b-lg sidebar-menu'
+        onClick={() => handleMenuClick('task')}
+      >
         <span className="material-icons sidebar-icons text-base">sort</span>Tasks
       </button>
     </div>
