@@ -5,6 +5,7 @@ import ProjectList from './view/Projects';
 import TasksList from './view/Tasks';
 import MyInfoView from './view/Summary';
 import CreateProfile from './view/CreateProfile';
+import EditProfile from './view/EditProfile';
 import { fetchProjects, fetchTasks, fetchMyInfo } from './utils/apiService';
 import { Token } from './config/Token';
 
@@ -106,6 +107,13 @@ function App() {
           <>
             <div className="my-4">
               <CreateProfile onProfileCreated={handleProfileCreated} />
+            </div>
+          </>
+        )}
+        {selectedView === 'editProfile' && (
+          <>
+            <div className="my-4">
+              <EditProfile onProfileEdited={handleProfileCreated} />
             </div>
           </>
         )}
