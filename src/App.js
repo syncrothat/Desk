@@ -6,6 +6,7 @@ import TasksList from './view/Tasks';
 import MyInfoView from './view/Summary';
 import CreateProfile from './view/CreateProfile';
 import { fetchProjects, fetchTasks, fetchMyInfo } from './utils/apiService';
+import { Token } from './config/Token';
 
 function App() {
   const [selectedView, setSelectedView] = useState('home');
@@ -17,12 +18,19 @@ function App() {
   useEffect(() => {
     const loadData = async () => {
       try {
+        const userInfo = await fetchMyInfo(Token);
+        setMyInfo(userInfo);
+
+        if (!userInfo.has_profile) {
+          setSelectedView('createProfile');
+          return;
+        }
+
         let data;
         if (selectedView === 'home') {
-          data = await Promise.all([fetchMyInfo(), fetchProjects(), fetchTasks()]);
-          setMyInfo(data[0]);
-          setProjects(data[1].data);
-          setTasks(data[2].data);
+          data = await Promise.all([fetchProjects(), fetchTasks()]);
+          setProjects(data[0].data);
+          setTasks(data[1].data);
         } else if (selectedView === 'project') {
           data = await fetchProjects();
           setProjects(data.data);
@@ -39,7 +47,7 @@ function App() {
   }, [selectedView]);
 
   const handleProfileCreated = () => {
-    setSelectedView('home');  // Switch to the home view after profile creation
+    setSelectedView('home'); 
   };
 
   return (
