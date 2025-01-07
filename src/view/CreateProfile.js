@@ -22,11 +22,10 @@ const CreateProfile = ({ onProfileCreated }) => {
       [name]: name === 'dob' ? `${value}T00:00:00Z` : value,
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      await axios.post(
         'https://api.sync.buxxed.me/api/protected/profile',
         formData,
         {
@@ -36,7 +35,7 @@ const CreateProfile = ({ onProfileCreated }) => {
           },
         }
       );
-
+  
       Swal.fire({
         icon: 'success',
         title: 'Profile created',
@@ -47,7 +46,7 @@ const CreateProfile = ({ onProfileCreated }) => {
       });
     } catch (error) {
       console.error('Error updating profile:', error);
-
+  
       Swal.fire({
         icon: 'error',
         title: 'There is something wrong!',

@@ -26,7 +26,7 @@ const EditProfile = ({ onProfileEdited }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
+      await axios.put(
         'https://api.sync.buxxed.me/api/protected/profile',
         formData,
         {
@@ -36,7 +36,7 @@ const EditProfile = ({ onProfileEdited }) => {
           },
         }
       );
-
+  
       Swal.fire({
         icon: 'success',
         title: 'Profile created',
@@ -54,7 +54,7 @@ const EditProfile = ({ onProfileEdited }) => {
       });
     }
   };
-
+  
   return (
     <div className="p-6 max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-200">
       <h1 className="text-2xl mb-2 font-bold">Edit Your Profile</h1>
