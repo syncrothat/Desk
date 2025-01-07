@@ -4,6 +4,7 @@ import Sidebar from './utils/Sidebar';
 import ProjectList from './view/Projects';
 import TasksList from './view/Tasks';
 import MyInfoView from './view/Summary';
+import CreateProfile from './view/CreateProfile';
 import { fetchProjects, fetchTasks, fetchMyInfo } from './utils/apiService';
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
     loadData();
   }, [selectedView]);
 
+  const handleProfileCreated = () => {
+    setSelectedView('home');  // Switch to the home view after profile creation
+  };
+
   return (
     <div className="app">
       <button
@@ -52,7 +57,7 @@ function App() {
 
       <div className={`sidebar-container ${isSidebarOpen ? 'open' : ''}`}>
         <Sidebar onSelect={setSelectedView} setIsSidebarOpen={setIsSidebarOpen} />
-        </div>
+      </div>
 
       <div className="main-content">
         {selectedView === 'home' && (
@@ -86,6 +91,13 @@ function App() {
             <div className="my-4">
               <h1 className="text-2xl font-bold">My Tasks</h1>
               <TasksList tasks={tasks} />
+            </div>
+          </>
+        )}
+        {selectedView === 'createProfile' && (
+          <>
+            <div className="my-4">
+              <CreateProfile onProfileCreated={handleProfileCreated} />
             </div>
           </>
         )}

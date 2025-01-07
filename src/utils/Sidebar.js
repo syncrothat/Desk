@@ -9,12 +9,22 @@ const Sidebar = ({ onSelect, setIsSidebarOpen }) => {
 
   return (
     <div className="sidebar">
-      <img className='w-12 h-auto' src={logo} alt="Logo" />
+      <img 
+        className='w-12 h-auto' 
+        src={logo} alt="Logo"
+        onClick={() => handleMenuClick('home')}  
+      />
       <button
         className='py-2 px-4 rounded-b-lg sidebar-menu'
         onClick={() => handleMenuClick('home')}
       >
         <span className="material-icons sidebar-icons text-base">home</span>Home
+      </button>
+      <button
+        className='py-2 px-4 rounded-b-lg sidebar-menu'
+        onClick={() => handleMenuClick('createProfile')}
+      >
+        <span className="material-icons sidebar-icons text-base">person</span>Profile
       </button>
       <button
         className='py-2 px-4 rounded-b-lg sidebar-menu'
