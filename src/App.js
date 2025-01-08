@@ -78,7 +78,11 @@ function App() {
       </button>
 
       <div className={isSidebarOpen ? 'sidebar-container open' : 'sidebar-container'}>
-        <Sidebar onSelect={handleViewChange} setIsSidebarOpen={setIsSidebarOpen} />
+        <Sidebar
+          onSelect={handleViewChange}
+          setIsSidebarOpen={setIsSidebarOpen}
+          selectedView={selectedView}
+        />
       </div>
 
       <div

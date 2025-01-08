@@ -25,11 +25,15 @@ body {
 }
 
 .sidebar-menu {
-  background-color: #444;
   color: #fff;
   text-align: start;
   display: flex;
   align-items: center;
+}
+
+.sidebar-menu.active {
+  background-color: #3273ff;
+  color: #fff;
 }
   
 .sidebar-icons {
