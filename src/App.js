@@ -15,6 +15,7 @@ function App() {
   const [myInfo, setMyInfo] = useState({});
   const [tasks, setTasks] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false); // New state for animation
 
   useEffect(() => {
     const loadData = async () => {
@@ -22,12 +23,12 @@ function App() {
         const userProfile = await fetchUserProfile();
         const userInfo = userProfile.data;
         setMyInfo(userInfo);
-  
+
         if (!userInfo.first_name || !userInfo.last_name) {
           setSelectedView('createProfile');
           return;
         }
-  
+
         let data;
         if (selectedView === 'home') {
           data = await Promise.all([fetchProjects(), fetchTasks()]);
@@ -44,12 +45,20 @@ function App() {
         console.error('Error loading data:', error);
       }
     };
-  
+
     loadData();
   }, [selectedView]);
 
   const handleReturnHome = () => {
-    setSelectedView('home'); 
+    setSelectedView('home');
+  };
+
+  // Trigger animation before changing content
+  const handleViewChange = (view) => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setSelectedView(view);
+    }, 150);
   };
 
   return (
@@ -65,11 +74,14 @@ function App() {
         )}
       </button>
 
-      <div className={`sidebar-container ${isSidebarOpen ? 'open' : ''}`}>
-        <Sidebar onSelect={setSelectedView} setIsSidebarOpen={setIsSidebarOpen} />
+      <div className={isSidebarOpen ? 'sidebar-container open' : 'sidebar-container'}>
+        <Sidebar onSelect={handleViewChange} setIsSidebarOpen={setIsSidebarOpen} />
       </div>
 
-      <div className="main-content px-8">
+      <div
+        className={`main-content px-8 ${isAnimating ? 'fade-out' : 'fade-in'}`}
+        onTransitionEnd={() => setIsAnimating(false)}
+      >
         {selectedView === 'home' && (
           <>
             <div className="my-4 py-8">
