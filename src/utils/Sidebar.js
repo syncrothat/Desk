@@ -12,7 +12,7 @@ const Sidebar = ({ onSelect, setIsSidebarOpen }) => {
       <img 
         className='w-12 h-auto' 
         src={logo} alt="Logo"
-        onClick={() => handleMenuClick('home')}  
+        onClick={() => handleMenuClick('editProfile')}  
       />
       <button
         className='py-2 px-4 rounded-b-lg sidebar-menu'

@@ -49,6 +49,7 @@ const EditProfile = ({ onProfileEdited }) => {
   };
   
   return (
+    <div className="flex items-center justify-center min-h-screen p-6 bg-gray-50">
     <div className="p-6 max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-200">
       <h1 className="text-2xl mb-2 font-bold">Edit Your Profile</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -169,6 +170,7 @@ const EditProfile = ({ onProfileEdited }) => {
           Submit
         </button>
       </form>
+    </div>
     </div>
   );
 };
