@@ -16,9 +16,11 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false); // New state for animation
+  const [loading, setLoading] = useState(false); // New state for loading
 
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);  // Set loading to true before fetching data
       try {
         const userProfile = await fetchUserProfile();
         const userInfo = userProfile.data;
@@ -26,6 +28,7 @@ function App() {
 
         if (!userInfo.first_name || !userInfo.last_name) {
           setSelectedView('createProfile');
+          setLoading(false); // Set loading to false when data is loaded
           return;
         }
 
@@ -44,6 +47,7 @@ function App() {
       } catch (error) {
         console.error('Error loading data:', error);
       }
+      setLoading(false);  // Set loading to false when data is loaded
     };
 
     loadData();
@@ -53,7 +57,6 @@ function App() {
     setSelectedView('home');
   };
 
-  // Trigger animation before changing content
   const handleViewChange = (view) => {
     setIsAnimating(true);
     setTimeout(() => {
@@ -82,61 +85,98 @@ function App() {
         className={`main-content px-8 ${isAnimating ? 'fade-out' : 'fade-in'}`}
         onTransitionEnd={() => setIsAnimating(false)}
       >
-        {selectedView === 'home' && (
+        {loading ? (
+          <div className="loading-spinner">
+            <svg
+              className="spinner-frame"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="xMidYMid"
+              width="200"
+              height="200"
+              style={{
+                shapeRendering: 'auto',
+                display: 'block',
+              }}
+            >
+              <g>
+                <path
+                  stroke="none"
+                  fill="#003366"
+                  d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50"
+                >
+                  <animateTransform
+                    values="0 50 51;360 50 51"
+                    keyTimes="0;1"
+                    repeatCount="indefinite"
+                    dur="1s"
+                    type="rotate"
+                    attributeName="transform"
+                  ></animateTransform>
+                </path>
+              </g>
+            </svg>
+          </div>
+
+        ) : (
           <>
-            <div className="my-4 py-8">
-              <h1 className="text-2xl font-bold">
-                Hello, {myInfo.first_name}!
-              </h1>
-            </div>
-            <div className="my-4">
-              <MyInfoView myInfo={myInfo} />
-            </div>
-            <div className="my-4">
-              <h1 className="text-xl font-bold mb-4">My Projects</h1>
-              <ProjectList projects={projects} onNavigate={setSelectedView} />
-            </div>
-            <div className="my-4">
-              <h1 className="text-xl font-bold mb-4">My Tasks</h1>
-              <TasksList tasks={tasks} />
-            </div>
-          </>
-        )}
-        {selectedView === 'project' && (
-          <>
-            <div className="my-4 py-8">
-              <h1 className="text-2xl font-bold">My Projects</h1>
-              <ProjectList projects={projects} />
-            </div>
-          </>
-        )}
-        {selectedView === 'task' && (
-          <>
-            <div className="my-4 py-8">
-              <h1 className="text-2xl font-bold">My Tasks</h1>
-              <TasksList tasks={tasks} />
-            </div>
-          </>
-        )}
-        {selectedView === 'createProfile' && (
-          <>
-            <div className="my-4">
-              <CreateProfile onProfileCreated={handleReturnHome} />
-            </div>
-          </>
-        )}
-        {selectedView === 'editProfile' && (
-          <>
-            <div className="my-4">
-              <EditProfile onProfileEdited={handleReturnHome} />
-            </div>
-          </>
-        )}
-        {selectedView === 'createProject' && (
-          <>
-            <div className="my-4">
-              <CreateProject onProjectCreated={handleReturnHome} />
-            </div>
+            {selectedView === 'home' && (
+              <>
+                <div className="my-4 py-8">
+                  <h1 className="text-2xl font-bold">
+                    Hello, {myInfo.first_name}!
+                  </h1>
+                </div>
+                <div className="my-4">
+                  <MyInfoView myInfo={myInfo} />
+                </div>
+                <div className="my-4">
+                  <h1 className="text-xl font-bold mb-4">My Projects</h1>
+                  <ProjectList projects={projects} onNavigate={setSelectedView} />
+                </div>
+                <div className="my-4">
+                  <h1 className="text-xl font-bold mb-4">My Tasks</h1>
+                  <TasksList tasks={tasks} />
+                </div>
+              </>
+            )}
+            {selectedView === 'project' && (
+              <>
+                <div className="my-4 py-8">
+                  <h1 className="text-2xl font-bold">My Projects</h1>
+                  <ProjectList projects={projects} />
+                </div>
+              </>
+            )}
+            {selectedView === 'task' && (
+              <>
+                <div className="my-4 py-8">
+                  <h1 className="text-2xl font-bold">My Tasks</h1>
+                  <TasksList tasks={tasks} />
+                </div>
+              </>
+            )}
+            {selectedView === 'createProfile' && (
+              <>
+                <div className="my-4">
+                  <CreateProfile onProfileCreated={handleReturnHome} />
+                </div>
+              </>
+            )}
+            {selectedView === 'editProfile' && (
+              <>
+                <div className="my-4">
+                  <EditProfile onProfileEdited={handleReturnHome} />
+                </div>
+              </>
+            )}
+            {selectedView === 'createProject' && (
+              <>
+                <div className="my-4">
+                  <CreateProject onProjectCreated={handleReturnHome} />
+                </div>
+              </>
+            )}
           </>
         )}
       </div>
