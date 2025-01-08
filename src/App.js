@@ -109,7 +109,7 @@ function App() {
                     values="0 50 51;360 50 51"
                     keyTimes="0;1"
                     repeatCount="indefinite"
-                    dur="1s"
+                    dur="0.75s"
                     type="rotate"
                     attributeName="transform"
                   ></animateTransform>
