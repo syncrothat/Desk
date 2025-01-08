@@ -43,43 +43,45 @@ const CreateProject = ({ onProjectCreated }) => {
   };
 
   return (
-    <div className="p-6 max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-gray-200">
-      <h1 className="text-2xl mb-6 font-bold">Create a new project</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700" htmlFor="project_name">
-            Project Name
-          </label>
-          <input
-            type="text"
-            id="project_name"
-            name="project_name"
-            className="mt-1 block p-2 h-10 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={formData.project_name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700" htmlFor="description">
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            className="mt-1 block p-2 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-gray-700 text-white py-2 px-4 rounded-full shadow-sm hover:bg-gray-800 focus:outline-none"
-        >
-          Create project
-        </button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen p-6 bg-gray-50">
+      <div className="p-6 max-w-lg w-full bg-white rounded-2xl shadow-md border border-gray-200">
+        <h1 className="text-2xl mb-6 font-bold">Create a new project</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700" htmlFor="project_name">
+              Project Name
+            </label>
+            <input
+              type="text"
+              id="project_name"
+              name="project_name"
+              className="mt-1 block p-2 h-10 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              value={formData.project_name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700" htmlFor="description">
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              className="mt-1 block p-2 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-gray-700 text-white py-2 px-4 rounded-full shadow-sm hover:bg-gray-800 focus:outline-none"
+          >
+            Create project
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

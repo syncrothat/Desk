@@ -69,10 +69,10 @@ function App() {
         <Sidebar onSelect={setSelectedView} setIsSidebarOpen={setIsSidebarOpen} />
       </div>
 
-      <div className="main-content">
+      <div className="main-content px-8">
         {selectedView === 'home' && (
           <>
-            <div className="my-4">
+            <div className="my-4 py-8">
               <h1 className="text-2xl font-bold">
                 Hello, {myInfo.first_name}!
               </h1>
@@ -92,7 +92,7 @@ function App() {
         )}
         {selectedView === 'project' && (
           <>
-            <div className="my-4">
+            <div className="my-4 py-8">
               <h1 className="text-2xl font-bold">My Projects</h1>
               <ProjectList projects={projects} />
             </div>
@@ -100,7 +100,7 @@ function App() {
         )}
         {selectedView === 'task' && (
           <>
-            <div className="my-4">
+            <div className="my-4 py-8">
               <h1 className="text-2xl font-bold">My Tasks</h1>
               <TasksList tasks={tasks} />
             </div>
