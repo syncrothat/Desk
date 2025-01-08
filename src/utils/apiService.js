@@ -6,6 +6,7 @@ const baseAPIURL = 'https://api.sync.buxxed.me';
 const myProject = `${baseAPIURL}/api/protected/accounts/project`;
 const myTask = `${baseAPIURL}/api/protected/accounts/task`;
 const myinfo = `${baseAPIURL}/api/protected/accounts/myinfo`;
+const myProfile = `${baseAPIURL}/api/protected/profile`;
 
 export const fetchProjects = async () => {
   try {
@@ -39,6 +40,18 @@ export const fetchMyInfo = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching info:', error);
+    throw error;
+  }
+};
+
+export const fetchUserProfile = async () => {
+  try {
+    const token = Token;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await axios.get(myProfile, { headers });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
     throw error;
   }
 };

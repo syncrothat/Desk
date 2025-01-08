@@ -7,8 +7,7 @@ import MyInfoView from './view/Summary';
 import CreateProfile from './view/CreateProfile';
 import EditProfile from './view/EditProfile';
 import CreateProject from './view/CreateProject';
-import { fetchProjects, fetchTasks, fetchMyInfo } from './utils/apiService';
-import { Token } from './config/Token';
+import { fetchUserProfile, fetchProjects, fetchTasks } from './utils/apiService';
 
 function App() {
   const [selectedView, setSelectedView] = useState('home');
@@ -20,14 +19,15 @@ function App() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const userInfo = await fetchMyInfo(Token);
+        const userProfile = await fetchUserProfile();
+        const userInfo = userProfile.data;
         setMyInfo(userInfo);
-
-        if (!userInfo.has_profile) {
+  
+        if (!userInfo.first_name || !userInfo.last_name) {
           setSelectedView('createProfile');
           return;
         }
-
+  
         let data;
         if (selectedView === 'home') {
           data = await Promise.all([fetchProjects(), fetchTasks()]);
@@ -44,7 +44,7 @@ function App() {
         console.error('Error loading data:', error);
       }
     };
-
+  
     loadData();
   }, [selectedView]);
 
@@ -73,7 +73,9 @@ function App() {
         {selectedView === 'home' && (
           <>
             <div className="my-4">
-              <h1 className="text-2xl font-bold">Home</h1>
+              <h1 className="text-2xl font-bold">
+                Hello, {myInfo.first_name}!
+              </h1>
             </div>
             <div className="my-4">
               <MyInfoView myInfo={myInfo} />
@@ -81,7 +83,7 @@ function App() {
             <div className="my-4">
               <h1 className="text-xl font-bold mb-4">My Projects</h1>
               <ProjectList projects={projects} onNavigate={setSelectedView} />
-              </div>
+            </div>
             <div className="my-4">
               <h1 className="text-xl font-bold mb-4">My Tasks</h1>
               <TasksList tasks={tasks} />
