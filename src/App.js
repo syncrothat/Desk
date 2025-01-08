@@ -6,6 +6,7 @@ import TasksList from './view/Tasks';
 import MyInfoView from './view/Summary';
 import CreateProfile from './view/CreateProfile';
 import EditProfile from './view/EditProfile';
+import CreateProject from './view/CreateProject';
 import { fetchProjects, fetchTasks, fetchMyInfo } from './utils/apiService';
 import { Token } from './config/Token';
 
@@ -47,7 +48,7 @@ function App() {
     loadData();
   }, [selectedView]);
 
-  const handleProfileCreated = () => {
+  const handleReturnHome = () => {
     setSelectedView('home'); 
   };
 
@@ -106,14 +107,21 @@ function App() {
         {selectedView === 'createProfile' && (
           <>
             <div className="my-4">
-              <CreateProfile onProfileCreated={handleProfileCreated} />
+              <CreateProfile onProfileCreated={handleReturnHome} />
             </div>
           </>
         )}
         {selectedView === 'editProfile' && (
           <>
             <div className="my-4">
-              <EditProfile onProfileEdited={handleProfileCreated} />
+              <EditProfile onProfileEdited={handleReturnHome} />
+            </div>
+          </>
+        )}
+        {selectedView === 'createProject' && (
+          <>
+            <div className="my-4">
+              <CreateProject onProjectCreated={handleReturnHome} />
             </div>
           </>
         )}
