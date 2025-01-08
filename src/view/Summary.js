@@ -32,7 +32,7 @@ const MyInfoView = () => {
         </div>
 
         <div
-          key="project-count-card"
+          key="task-count-card"
           className="bg-gray-800 rounded-xl shadow-md p-4 border border-gray-500"
         >
           <h2 className="text-6xl text-white mb-2">{myInfo?.task_count}</h2>

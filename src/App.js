@@ -80,8 +80,8 @@ function App() {
             </div>
             <div className="my-4">
               <h1 className="text-xl font-bold mb-4">My Projects</h1>
-              <ProjectList projects={projects} />
-            </div>
+              <ProjectList projects={projects} onNavigate={setSelectedView} />
+              </div>
             <div className="my-4">
               <h1 className="text-xl font-bold mb-4">My Tasks</h1>
               <TasksList tasks={tasks} />
