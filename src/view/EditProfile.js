@@ -36,14 +36,7 @@ const EditProfile = ({ onProfileEdited }) => {
           },
         }
       );
-  
-      Swal.fire({
-        icon: 'success',
-        title: 'Profile created',
-        text: 'Your profile has been edited successfully!',
-      }).then(() => {
-        onProfileEdited();
-      });
+      onProfileEdited();
     } catch (error) {
       console.error('Error updating profile:', error);
 

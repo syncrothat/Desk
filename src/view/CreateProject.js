@@ -30,14 +30,7 @@ const CreateProject = ({ onProjectCreated }) => {
           },
         }
       );
-  
-      Swal.fire({
-        icon: 'success',
-        title: 'Project created',
-        text: 'Your project has been created successfully!',
-      }).then(() => {
-        onProjectCreated();
-      });
+      onProjectCreated();
     } catch (error) {
       console.error('Error creating project:', error);
   

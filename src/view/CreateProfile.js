@@ -35,15 +35,7 @@ const CreateProfile = ({ onProfileCreated }) => {
           },
         }
       );
-  
-      Swal.fire({
-        icon: 'success',
-        title: 'Profile created',
-        text: 'Your profile has been created successfully!',
-      }).then(() => {
-        // Trigger the callback to update the view to 'home' after successful profile creation
-        onProfileCreated();
-      });
+      onProfileCreated();
     } catch (error) {
       console.error('Error updating profile:', error);
   
