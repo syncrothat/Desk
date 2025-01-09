@@ -4,7 +4,7 @@ import './style/index.css';
 import App from './App';
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
+  navigator.serviceWorker.register('/Desk/sw.js')
     .then((registration) => {
       console.log('Service Worker registered:', registration);
     })
