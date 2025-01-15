@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Token from '../config/Token';
 
-const baseAPIURL = 'https://api.sync.buxxed.me';
+const baseAPIURL = 'https://api.sync2.buxxed.me';
 
 const myProject = `${baseAPIURL}/api/protected/accounts/project`;
 const myTask = `${baseAPIURL}/api/protected/accounts/task`;

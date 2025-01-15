@@ -27,7 +27,7 @@ const EditProfile = ({ onProfileEdited }) => {
     e.preventDefault();
     try {
       await axios.put(
-        'https://api.sync.buxxed.me/api/protected/profile',
+        'https://api.sync2.buxxed.me/api/protected/profile',
         formData,
         {
           headers: {
