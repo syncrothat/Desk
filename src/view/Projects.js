@@ -8,7 +8,7 @@ const ProjectList = ({ onNavigate }) => {
     const getProjects = async () => {
       try {
         const data = await fetchProjects();
-        setProjects(data.data);
+        setProjects(data.data || []);
       } catch (error) {
         console.error('Error loading projects:', error);
       }
