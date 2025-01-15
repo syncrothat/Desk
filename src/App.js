@@ -29,7 +29,7 @@ function App() {
 
         if (!userInfo.first_name || !userInfo.last_name) {
           setSelectedView('createProfile');
-          setLoading(false); // Set loading to false when data is loaded
+          setLoading(false);
           return;
         }
 
@@ -46,9 +46,13 @@ function App() {
           setTasks(data.data);
         }
       } catch (error) {
-        console.error('Error loading data:', error);
+        if (error.response && error.response.status === 404) {
+          setSelectedView('createProfile');
+        } else {
+          console.error('Error loading data:', error);
+        }
       }
-      setLoading(false);  // Set loading to false when data is loaded
+      setLoading(false);
     };
 
     loadData();
