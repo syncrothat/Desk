@@ -7,6 +7,8 @@ const myProject = `${baseAPIURL}/api/protected/accounts/project`;
 const myTask = `${baseAPIURL}/api/protected/accounts/task`;
 const myinfo = `${baseAPIURL}/api/protected/accounts/myinfo`;
 const myProfile = `${baseAPIURL}/api/protected/profile`;
+const projectDetail = `${baseAPIURL}/api/protected/project`;
+const projectTask = `${baseAPIURL}/api/protected/task/project`;
 
 export const fetchProjects = async () => {
   try {
@@ -52,6 +54,31 @@ export const fetchUserProfile = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
+
+export const fetchProjectDetails = async (projectId) => {
+  try {
+    const token = Token;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await axios.get(`${projectDetail}/${projectId}`, { headers });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching project details:', error);
+    throw error;
+  }
+};
+
+// utils/apiService.js
+export const fetchProjectTasks = async (projectId) => {
+  try {
+    const token = Token;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await axios.get(`${projectTask}/${projectId}`, { headers });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching project tasks:', error);
     throw error;
   }
 };

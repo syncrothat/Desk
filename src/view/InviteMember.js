@@ -192,14 +192,14 @@ const InviteMember = ({ onMemberAdded }) => {
               className="w-1/2 bg-gray-700 text-white py-2 px-4 rounded-full shadow-sm hover:bg-gray-800 focus:outline-none"
               onClick={addMember}
             >
-              Add more
+              <span className="material-icons text-base">add</span> Add
             </button>
 
             <button
               type="submit"
               className="w-1/2 bg-gray-700 text-white py-2 px-4 rounded-full shadow-sm hover:bg-gray-800 focus:outline-none"
             >
-              Invite
+              Submit
             </button>
           </div>
         </form>

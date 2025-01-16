@@ -1,3 +1,4 @@
+// view/Projects.js
 import React, { useEffect, useState } from 'react';
 import { fetchProjects } from '../utils/apiService';
 
@@ -23,15 +24,20 @@ const ProjectList = ({ onNavigate }) => {
         {projects.map((project) => (
           <div
             key={project.projectid}
-            className="bg-white rounded-xl shadow-md p-4 border border-gray-200"
+            className="bg-white rounded-xl shadow-md p-4 border border-gray-200 cursor-pointer"
+            onClick={() => onNavigate(project.projectid)}
           >
             <h2 className="text-lg font-semibold mb-2">{project.project_name}</h2>
             <p className="text-gray-700 mb-2">{project.description}</p>
-            <div className="text-gray-500">
-              <span className="material-icons sidebar-icons text-base">person_outline</span>
-              <span className="text-base pr-6">{project.members_count}</span>
-              <span className="material-icons sidebar-icons text-base">sort</span>
-              <span className="text-base">{project.tasks_count}</span>
+            <div className="info">
+              <div className="info-item">
+                <span className="material-icons">person_outline</span>
+                <span>{project.members_count}</span>
+              </div>
+              <div className="info-item">
+                <span className="material-icons">sort</span>
+                <span>{project.tasks_count}</span>
+              </div>
             </div>
           </div>
         ))}
