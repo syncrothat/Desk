@@ -12,7 +12,7 @@ import InviteMember from './view/InviteMember';
 import ProjectDetails from './view/ProjectDetails';  // Import the new view
 import { fetchUserProfile, fetchProjects, fetchTasks } from './utils/apiService';
 
-function App() {
+function App() {  
   const [selectedView, setSelectedView] = useState('home');
   const [projects, setProjects] = useState([]);
   const [myInfo, setMyInfo] = useState({});

@@ -1,5 +1,9 @@
-import Cookies from 'js-cookie';
+const token = localStorage.getItem('iss_token');
 
-export const Token = Cookies.get('token');
+if (!token) {
+    window.location.href = 'https://syncroapp.github.io/login';
+}
+  
+export const Token = token;
 
 export default Token;
