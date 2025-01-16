@@ -157,7 +157,7 @@ function App() {
                 </div>
                 <div className="my-4">
                   <h1 className="text-xl font-bold mb-4">My Projects</h1>
-                  <ProjectList onNavigate={handleProjectClick} />
+                  <ProjectList projects={projects} onNavigate={handleProjectClick} />
                 </div>
                 <div className="my-4">
                   <h1 className="text-xl font-bold mb-4">My Tasks</h1>
@@ -169,7 +169,7 @@ function App() {
               <>
                 <div className="my-4 py-8">
                   <h1 className="text-2xl font-bold">My Projects</h1>
-                  <ProjectList onNavigate={handleProjectClick} />
+                  <ProjectList projects={projects} onNavigate={handleProjectClick} />
                 </div>
               </>
             )}
