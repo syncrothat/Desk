@@ -1,7 +1,8 @@
+// view/ProjectDetails.js
 import React, { useEffect, useState } from 'react';
 import { fetchProjectDetails, fetchProjectTasks } from '../utils/apiService';
 
-const ProjectDetails = ({ projectId, onBack }) => {
+const ProjectDetails = ({ projectId, onBack, onInviteMember }) => {
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,7 @@ const ProjectDetails = ({ projectId, onBack }) => {
     const deadlineDate = new Date(deadline);
     const now = new Date();
     const diff = deadlineDate - now;
-    return diff < 7 * 24 * 60 * 60 * 1000; // less than one week
+    return diff < 7 * 24 * 60 * 60 * 1000;
   };
 
   if (loading) {
@@ -74,6 +75,14 @@ const ProjectDetails = ({ projectId, onBack }) => {
             <span className="material-icons">update</span>
             <span>{formatDate(project.updated_at)}</span>
           </div>
+        </div>
+        <div className="pb-8">
+          <button
+            className="rounded-full bg-gray-700 text-white px-4 py-2"
+            onClick={() => onInviteMember(projectId)}
+          >
+            <span className="material-icons pr-2">add</span>Invite Member
+          </button>
         </div>
         <div key={project.projectid} className="mb-6">
           <h2 className="text-md font-bold mb-3">Tasks</h2>

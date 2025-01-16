@@ -1,3 +1,4 @@
+// App.js
 import React, { useState, useEffect } from 'react';
 import './style/App.css';
 import Sidebar from './utils/Sidebar';
@@ -78,6 +79,11 @@ function App() {
       setSelectedProjectId(projectId);
       setSelectedView('projectDetails');
     }
+  };
+
+  const handleInviteMember = (projectId) => {
+    setSelectedProjectId(projectId);
+    setSelectedView('inviteMember');
   };
 
   return (
@@ -199,14 +205,21 @@ function App() {
             {selectedView === 'inviteMember' && (
               <>
                 <div className="my-4">
-                  <InviteMember onMemberAdded={handleReturnHome} />
+                  <InviteMember
+                    projectId={selectedProjectId}
+                    onMemberAdded={handleReturnHome}
+                  />
                 </div>
               </>
             )}
             {selectedView === 'projectDetails' && (
               <>
                 <div className="my-4">
-                  <ProjectDetails projectId={selectedProjectId} onBack={handleReturnHome} />
+                  <ProjectDetails
+                    projectId={selectedProjectId}
+                    onBack={handleReturnHome}
+                    onInviteMember={handleInviteMember} // Pass the new handler
+                  />
                 </div>
               </>
             )}

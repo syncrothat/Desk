@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+// view/InviteMember.js
+import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { fetchProjects } from '../utils/apiService'; // Ensure this import is correct
 import Token from '../config/Token';
 
-const InviteMember = ({ onMemberAdded }) => {
+const InviteMember = ({ projectId, onMemberAdded }) => {
   const [formData, setFormData] = useState({
-    project_id: '',
     members: [
       {
         username: '',
@@ -15,33 +14,6 @@ const InviteMember = ({ onMemberAdded }) => {
       },
     ],
   });
-
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // Fetch projects when component loads
-  useEffect(() => {
-    const loadProjects = async () => {
-      try {
-        const data = await fetchProjects();
-        setProjects(data.data || []); // Assuming data is structured like in the provided response
-        setLoading(false);
-      } catch (error) {
-        console.error('Error loading projects:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Failed to load projects',
-          text: 'Could not fetch projects. Please try again later.',
-        });
-      }
-    };
-    loadProjects();
-  }, []);
-
-  const handleProjectChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
   const handleMemberChange = (index, e) => {
     const { name, value } = e.target;
@@ -67,11 +39,11 @@ const InviteMember = ({ onMemberAdded }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { project_id, members } = formData;
+    const { members } = formData;
 
     try {
       await axios.post(
-        `https://api.sync2.buxxed.me/api/protected/project/invite/${project_id}`,
+        `https://api.sync2.buxxed.me/api/protected/project/invite/${projectId}`,
         members,
         {
           headers: {
@@ -102,33 +74,6 @@ const InviteMember = ({ onMemberAdded }) => {
         <h1 className="text-2xl mb-2 font-bold">Invite Members</h1>
         <h1 className="text-sm mb-6 text-gray-400">Invite multiple members to your project in SyncroApp!</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700" htmlFor="project_id">
-              Select Project
-            </label>
-            {loading ? (
-              <p>Loading projects...</p>
-            ) : (
-              <select
-                id="project_id"
-                name="project_id"
-                className="mt-1 block p-2 h-10 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                value={formData.project_id}
-                onChange={handleProjectChange}
-                required
-              >
-                <option value="" disabled>
-                  Select a project
-                </option>
-                {projects.map((project) => (
-                  <option key={project.projectid} value={project.projectid}>
-                    {project.project_name}
-                  </option>
-                ))}
-              </select>
-            )}
-          </div>
-
           {formData.members.map((member, index) => (
             <div key={index} className="space-y-2 border p-4 rounded-md">
               <h2 className="text-sm font-semibold">Member {index + 1}</h2>
@@ -181,8 +126,8 @@ const InviteMember = ({ onMemberAdded }) => {
                 className="w-full bg-gray-700 text-white py-2 px-4 rounded-full shadow-sm hover:bg-gray-800 focus:outline-none"
                 onClick={() => removeMember(index)}
               >
-              <span className="material-icons text-base">close</span>
-            </button>
+                <span className="material-icons text-base">close</span>
+              </button>
             </div>
           ))}
 
