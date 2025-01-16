@@ -7,6 +7,7 @@ import MyInfoView from './view/Summary';
 import CreateProfile from './view/CreateProfile';
 import EditProfile from './view/EditProfile';
 import CreateProject from './view/CreateProject';
+import InviteMember from './view/InviteMember';
 import { fetchUserProfile, fetchProjects, fetchTasks } from './utils/apiService';
 import Token from './config/Token';
 
@@ -236,6 +237,13 @@ function App() {
               <>
                 <div className="my-4">
                   <CreateProject onProjectCreated={handleReturnHome} />
+                </div>
+              </>
+            )}
+            {selectedView === 'inviteMember' && (
+              <>
+                <div className="my-4">
+                  <InviteMember onMemberAdded={handleReturnHome} />
                 </div>
               </>
             )}

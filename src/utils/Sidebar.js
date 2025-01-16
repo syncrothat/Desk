@@ -13,7 +13,7 @@ const Sidebar = ({ onSelect, setIsSidebarOpen, selectedView }) => {
         className="w-14 h-auto mb-4"
         src={logo}
         alt="Logo"
-        onClick={() => handleMenuClick('editProfile')}
+        onClick={() => handleMenuClick('home')}
       />
       <button
         className={`py-4 px-4 rounded-full sidebar-menu ${
