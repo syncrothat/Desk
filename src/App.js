@@ -1,5 +1,4 @@
-// App.js
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style/App.css';
 import Sidebar from './utils/Sidebar';
 import ProjectList from './view/Projects';
@@ -11,7 +10,6 @@ import CreateProject from './view/CreateProject';
 import InviteMember from './view/InviteMember';
 import ProjectDetails from './view/ProjectDetails';  // Import the new view
 import { fetchUserProfile, fetchProjects, fetchTasks } from './utils/apiService';
-import Token from './config/Token';
 
 function App() {
   const [selectedView, setSelectedView] = useState('home');
@@ -74,8 +72,12 @@ function App() {
   };
 
   const handleProjectClick = (projectId) => {
-    setSelectedProjectId(projectId);
-    setSelectedView('projectDetails');
+    if (projectId === 'createProject') {
+      setSelectedView('createProject');
+    } else {
+      setSelectedProjectId(projectId);
+      setSelectedView('projectDetails');
+    }
   };
 
   return (
@@ -149,7 +151,7 @@ function App() {
                 </div>
                 <div className="my-4">
                   <h1 className="text-xl font-bold mb-4">My Projects</h1>
-                  <ProjectList projects={projects} onNavigate={handleProjectClick} />
+                  <ProjectList onNavigate={handleProjectClick} />
                 </div>
                 <div className="my-4">
                   <h1 className="text-xl font-bold mb-4">My Tasks</h1>
@@ -161,7 +163,7 @@ function App() {
               <>
                 <div className="my-4 py-8">
                   <h1 className="text-2xl font-bold">My Projects</h1>
-                  <ProjectList projects={projects} onNavigate={handleProjectClick} />
+                  <ProjectList onNavigate={handleProjectClick} />
                 </div>
               </>
             )}
