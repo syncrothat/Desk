@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { fetchProjectDetails, fetchProjectTasks, postTasksCompletion, deleteTasks } from '../utils/apiService';
 import Swal from 'sweetalert2';
 
@@ -6,6 +6,15 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
+
+  const loadTasks = useCallback(async () => {
+    try {
+      const taskData = await fetchProjectTasks(projectId);
+      setTasks(taskData.data.tasks || []);
+    } catch (error) {
+      console.error('Error loading tasks:', error);
+    }
+  }, [projectId]);
 
   useEffect(() => {
     const getProjectDetails = async () => {
@@ -24,16 +33,7 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
     };
 
     getProjectDetails();
-  }, [projectId]);
-
-  const loadTasks = async () => {
-    try {
-      const taskData = await fetchProjectTasks(projectId);
-      setTasks(taskData.data.tasks || []);
-    } catch (error) {
-      console.error('Error loading tasks:', error);
-    }
-  };
+  }, [projectId, loadTasks]);
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
