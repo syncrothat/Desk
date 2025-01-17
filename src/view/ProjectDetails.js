@@ -207,16 +207,18 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
                 </div>
               </div>
             ))}
-            <div
-              key="new_project"
-              className="bg-slate-50 rounded-xl shadow-md p-4 border text-center cursor-pointer"
-              onClick={() => onCreateTask(projectId)}
-            >
-              <h2 className="text-6xl font-semibold">
-                <span className="material-icons">add</span>
-              </h2>
-              <p className="text-gray-700 font-semibold mb-2">Create new task</p>
-            </div>
+            {isAdmin && (
+              <div
+                key="new_project"
+                className="bg-slate-50 rounded-xl shadow-md p-4 border text-center cursor-pointer"
+                onClick={() => onCreateTask(projectId)}
+              >
+                <h2 className="text-6xl font-semibold">
+                  <span className="material-icons">add</span>
+                </h2>
+                <p className="text-gray-700 font-semibold mb-2">Create new task</p>
+              </div>
+            )}
           </div>
         </div>
         <div key={`${project ? project.projectid : ''}-completed`} className="mb-6">
