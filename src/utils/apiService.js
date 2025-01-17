@@ -107,3 +107,15 @@ export const deleteTasks = async (taskId) => {
     throw error;
   }
 };
+
+export const deleteProjects = async (projectId) => {
+  try {
+    const token = Token;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await axios.delete(`${projectDetail}/${projectId}`, { headers });
+    return response.data;
+  } catch (error) {
+    console.error('Error sending task completion request:', error);
+    throw error;
+  }
+};

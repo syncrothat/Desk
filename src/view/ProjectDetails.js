@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { fetchProjectDetails, fetchProjectTasks, postTasksCompletion, deleteTasks } from '../utils/apiService';
+import { fetchProjectDetails, fetchProjectTasks, postTasksCompletion, deleteTasks, deleteProjects } from '../utils/apiService';
 import Swal from 'sweetalert2';
 
 const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => {
@@ -89,6 +89,28 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
     }
   };
 
+  const handleDeleteProject = async (projectId) => {
+    try {
+      await deleteProjects(projectId);
+      Swal.fire({
+        title: 'Success!',
+        text: 'Project deleted successfully!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        window.location.reload();
+      });
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'There was an error deleting the project.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -128,12 +150,18 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
             <span>{project ? formatDate(project.updated_at) : ''}</span>
           </div>
         </div>
-        <div className="pb-8">
+        <div className="pb-8 flex space-x-2">
           <button
             className="rounded-full bg-gray-700 text-white px-4 py-2"
             onClick={() => onInviteMember(projectId)}
           >
             <span className="material-icons pr-2">add</span>Invite Member
+          </button>
+          <button
+            className="rounded-full bg-gray-700 text-white px-4 py-2"
+            onClick={() => handleDeleteProject(projectId)}
+          >
+            <span className="material-icons pr-2">delete</span>Delete Project
           </button>
         </div>
         <div key={project ? project.projectid : ''} className="mb-6">
