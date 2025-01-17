@@ -9,6 +9,7 @@ const myinfo = `${baseAPIURL}/api/protected/accounts/myinfo`;
 const myProfile = `${baseAPIURL}/api/protected/profile`;
 const projectDetail = `${baseAPIURL}/api/protected/project`;
 const projectTask = `${baseAPIURL}/api/protected/task/project`;
+const taskCompletion = `${baseAPIURL}/api/protected/task/completed`;
 
 export const fetchProjects = async () => {
   try {
@@ -70,7 +71,6 @@ export const fetchProjectDetails = async (projectId) => {
   }
 };
 
-// utils/apiService.js
 export const fetchProjectTasks = async (projectId) => {
   try {
     const token = Token;
@@ -79,6 +79,18 @@ export const fetchProjectTasks = async (projectId) => {
     return response.data;
   } catch (error) {
     console.error('Error fetching project tasks:', error);
+    throw error;
+  }
+};
+
+export const postTasksCompletion = async (taskId) => {
+  try {
+    const token = Token;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await axios.post(`${taskCompletion}/${taskId}`, {}, { headers });
+    return response.data;
+  } catch (error) {
+    console.error('Error sending task completion request:', error);
     throw error;
   }
 };

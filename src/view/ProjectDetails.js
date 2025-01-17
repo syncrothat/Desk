@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { fetchProjectDetails, fetchProjectTasks } from '../utils/apiService';
+import { fetchProjectDetails, fetchProjectTasks, postTasksCompletion } from '../utils/apiService';
+import Swal from 'sweetalert2';
 
 const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => {
   const [project, setProject] = useState(null);
@@ -36,6 +37,30 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
     const now = new Date();
     const diff = deadlineDate - now;
     return diff < 7 * 24 * 60 * 60 * 1000;
+  };
+
+  const handleTaskCompletion = async (taskId) => {
+    try {
+      await postTasksCompletion(taskId);
+      Swal.fire({
+        title: 'Success!',
+        text: 'Task completed successfully!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+      const updatedTasks = tasks.map(task => 
+        task.taskid === taskId ? { ...task, completed: true } : task
+      );
+      setTasks(updatedTasks);
+    } catch (error) {
+      console.error('Error completing task:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'There was an error completing the task.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
   };
 
   if (error) {
@@ -102,13 +127,20 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
                 >
                   Deadline {formatDate(task.deadline)}
                 </p>
+                <div className="info">
+                  <div className="info-item">
+                    <button onClick={() => handleTaskCompletion(task.taskid)}>
+                      <span className="material-icons sidebar-icons text-md">check</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             ))}
             <div
               key="new_project"
               className="bg-slate-50 rounded-xl shadow-md p-4 border text-center cursor-pointer"
               onClick={() => onCreateTask(projectId)}
-              >
+            >
               <h2 className="text-6xl font-semibold">
                 <span className="material-icons">add</span>
               </h2>
