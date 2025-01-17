@@ -10,6 +10,7 @@ import EditProfile from './view/EditProfile';
 import CreateProject from './view/CreateProject';
 import InviteMember from './view/InviteMember';
 import ProjectDetails from './view/ProjectDetails';
+import CreateTask from './view/CreateTask';
 import { fetchUserProfile, fetchProjects, fetchTasks } from './utils/apiService';
 
 function App() {  
@@ -84,6 +85,11 @@ function App() {
   const handleInviteMember = (projectId) => {
     setSelectedProjectId(projectId);
     setSelectedView('inviteMember');
+  };
+
+  const handleCreateTask = (projectId) => {
+    setSelectedProjectId(projectId);
+    setSelectedView('createTask');
   };
 
   return (
@@ -219,6 +225,17 @@ function App() {
                     projectId={selectedProjectId}
                     onBack={handleReturnHome}
                     onInviteMember={handleInviteMember}
+                    onCreateTask={handleCreateTask}
+                  />
+                </div>
+              </>
+            )}
+            {selectedView === 'createTask' && (
+              <>
+                <div className="my-4">
+                  <CreateTask 
+                    projectId={selectedProjectId}
+                    onTaskCreated={handleReturnHome} 
                   />
                 </div>
               </>
