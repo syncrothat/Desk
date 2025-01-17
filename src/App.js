@@ -9,7 +9,7 @@ import CreateProfile from './view/CreateProfile';
 import EditProfile from './view/EditProfile';
 import CreateProject from './view/CreateProject';
 import InviteMember from './view/InviteMember';
-import ProjectDetails from './view/ProjectDetails';  // Import the new view
+import ProjectDetails from './view/ProjectDetails';
 import { fetchUserProfile, fetchProjects, fetchTasks } from './utils/apiService';
 
 function App() {  
@@ -20,7 +20,7 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedProjectId, setSelectedProjectId] = useState(null);  // New state for selected project
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -218,7 +218,7 @@ function App() {
                   <ProjectDetails
                     projectId={selectedProjectId}
                     onBack={handleReturnHome}
-                    onInviteMember={handleInviteMember} // Pass the new handler
+                    onInviteMember={handleInviteMember}
                   />
                 </div>
               </>
