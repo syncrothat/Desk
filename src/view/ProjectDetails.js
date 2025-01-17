@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { fetchProjectDetails, fetchProjectTasks, postTasksCompletion, deleteTasks, deleteProjects } from '../utils/apiService';
+import { fetchProjectDetails, fetchProjectTasks, postTasksCompletion, deleteTasks, deleteProjects, fetchMyInfo } from '../utils/apiService';
 import Swal from 'sweetalert2';
 
 const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => {
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const loadTasks = useCallback(async () => {
     try {
@@ -20,8 +21,12 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
     const getProjectDetails = async () => {
       setError(null);
       try {
+        const userInfo = await fetchMyInfo();
         const projectData = await fetchProjectDetails(projectId);
         setProject(projectData.data);
+
+        const currentUser = projectData.data.members.find(member => member.userid === userInfo.userid);
+        setIsAdmin(currentUser ? currentUser.is_admin : false);
         await loadTasks();
       } catch (error) {
         if (error.response && (error.response.status === 404 || error.response.status === 500)) {
@@ -157,12 +162,14 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
           >
             <span className="material-icons pr-2">add</span>Invite Member
           </button>
-          <button
-            className="rounded-full bg-gray-700 text-white px-4 py-2"
-            onClick={() => handleDeleteProject(projectId)}
-          >
-            <span className="material-icons pr-2">delete</span>Delete Project
-          </button>
+          {isAdmin && (
+            <button
+              className="rounded-full bg-gray-700 text-white px-4 py-2"
+              onClick={() => handleDeleteProject(projectId)}
+            >
+              <span className="material-icons pr-2">delete</span>Delete Project
+            </button>
+          )}
         </div>
         <div key={project ? project.projectid : ''} className="mb-6">
           <h2 className="text-md font-bold mb-3">Incomplete Tasks</h2>
@@ -190,11 +197,13 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
                       <span className="material-icons sidebar-icons text-md">check</span>
                     </button>
                   </div>
-                  <div className="info-item">
-                    <button onClick={() => handleDeleteTask(task.taskid)}>
-                      <span className="material-icons sidebar-icons text-md">delete</span>
-                    </button>
-                  </div>
+                  {isAdmin && (
+                    <div className="info-item">
+                      <button onClick={() => handleDeleteTask(task.taskid)}>
+                        <span className="material-icons sidebar-icons text-md">delete</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
