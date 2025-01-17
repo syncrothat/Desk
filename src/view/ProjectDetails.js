@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchProjectDetails, fetchProjectTasks, postTasksCompletion } from '../utils/apiService';
+import { fetchProjectDetails, fetchProjectTasks, postTasksCompletion, deleteTasks } from '../utils/apiService';
 import Swal from 'sweetalert2';
 
 const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => {
@@ -48,7 +48,6 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
         icon: 'success',
         confirmButtonText: 'OK'
       });
-      // Optionally, update the task state or show a success message
       const updatedTasks = tasks.map(task => 
         task.taskid === taskId ? { ...task, is_completed: true } : task
       );
@@ -64,11 +63,34 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
     }
   };
 
+  const handleDeleteTask = async (taskId) => {
+    try {
+      await deleteTasks(taskId);
+      Swal.fire({
+        title: 'Success!',
+        text: 'Task deleting successfully!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+      const updatedTasks = tasks.map(task => 
+        task.taskid === taskId ? { ...task, is_completed: true } : task
+      );
+      setTasks(updatedTasks);
+    } catch (error) {
+      console.error('Error deleting task:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'There was an error deleting the task.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
 
-  // Separate tasks into completed and incomplete
   const completedTasks = tasks.filter(task => task.is_completed);
   const incompleteTasks = tasks.filter(task => !task.is_completed);
 
@@ -136,6 +158,11 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
                   <div className="info-item">
                     <button onClick={() => handleTaskCompletion(task.taskid)}>
                       <span className="material-icons sidebar-icons text-md">check</span>
+                    </button>
+                  </div>
+                  <div className="info-item">
+                    <button onClick={() => handleDeleteTask(task.taskid)}>
+                      <span className="material-icons sidebar-icons text-md">delete</span>
                     </button>
                   </div>
                 </div>

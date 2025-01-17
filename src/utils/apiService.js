@@ -10,6 +10,7 @@ const myProfile = `${baseAPIURL}/api/protected/profile`;
 const projectDetail = `${baseAPIURL}/api/protected/project`;
 const projectTask = `${baseAPIURL}/api/protected/task/project`;
 const taskCompletion = `${baseAPIURL}/api/protected/task/completed`;
+const allTask = `${baseAPIURL}/api/protected/task`;
 
 export const fetchProjects = async () => {
   try {
@@ -88,6 +89,18 @@ export const postTasksCompletion = async (taskId) => {
     const token = Token;
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     const response = await axios.post(`${taskCompletion}/${taskId}`, {}, { headers });
+    return response.data;
+  } catch (error) {
+    console.error('Error sending task completion request:', error);
+    throw error;
+  }
+};
+
+export const deleteTasks = async (taskId) => {
+  try {
+    const token = Token;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await axios.delete(`${allTask}/${taskId}`, { headers });
     return response.data;
   } catch (error) {
     console.error('Error sending task completion request:', error);
