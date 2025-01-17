@@ -155,22 +155,22 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
             <span>{project ? formatDate(project.updated_at) : ''}</span>
           </div>
         </div>
-        <div className="pb-8 flex space-x-2">
-          <button
-            className="rounded-full bg-gray-700 text-white px-4 py-2"
-            onClick={() => onInviteMember(projectId)}
-          >
-            <span className="material-icons pr-2">add</span>Invite Member
-          </button>
-          {isAdmin && (
-            <button
-              className="rounded-full bg-gray-700 text-white px-4 py-2"
-              onClick={() => handleDeleteProject(projectId)}
-            >
-              <span className="material-icons pr-2">delete</span>Delete Project
-            </button>
-          )}
-        </div>
+        {isAdmin && (
+          <div className="pb-8 flex space-x-2">
+              <button
+                className="rounded-full bg-gray-700 text-white px-4 py-2"
+                onClick={() => onInviteMember(projectId)}
+              >
+                <span className="material-icons pr-2">add</span>Invite Member
+              </button>
+              <button
+                className="rounded-full bg-gray-700 text-white px-4 py-2"
+                onClick={() => handleDeleteProject(projectId)}
+              >
+                <span className="material-icons pr-2">delete</span>Delete Project
+              </button>
+          </div>
+        )}
         <div key={project ? project.projectid : ''} className="mb-6">
           <h2 className="text-md font-bold mb-3">Incomplete Tasks</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
