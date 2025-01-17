@@ -48,8 +48,9 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
         icon: 'success',
         confirmButtonText: 'OK'
       });
+      // Optionally, update the task state or show a success message
       const updatedTasks = tasks.map(task => 
-        task.taskid === taskId ? { ...task, completed: true } : task
+        task.taskid === taskId ? { ...task, is_completed: true } : task
       );
       setTasks(updatedTasks);
     } catch (error) {
@@ -66,6 +67,10 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
   if (error) {
     return <div>{error}</div>;
   }
+
+  // Separate tasks into completed and incomplete
+  const completedTasks = tasks.filter(task => task.is_completed);
+  const incompleteTasks = tasks.filter(task => !task.is_completed);
 
   return (
     <div>
@@ -108,9 +113,9 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
           </button>
         </div>
         <div key={project ? project.projectid : ''} className="mb-6">
-          <h2 className="text-md font-bold mb-3">Tasks</h2>
+          <h2 className="text-md font-bold mb-3">Incomplete Tasks</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {Array.isArray(tasks) && tasks.map((task) => (
+            {Array.isArray(incompleteTasks) && incompleteTasks.map((task) => (
               <div
                 key={task.taskid}
                 className="bg-white rounded-xl shadow-md p-4 border border-gray-200"
@@ -146,6 +151,33 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
               </h2>
               <p className="text-gray-700 font-semibold mb-2">Create new task</p>
             </div>
+          </div>
+        </div>
+        <div key={`${project ? project.projectid : ''}-completed`} className="mb-6">
+          <h2 className="text-md font-bold mb-3">Completed Tasks</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {Array.isArray(completedTasks) && completedTasks.map((task) => (
+              <div
+                key={task.taskid}
+                className="bg-white rounded-xl shadow-md p-4 border border-gray-200"
+              >
+                <h3 className="text-lg font-semibold mb-1">{task.title}</h3>
+                <p className="text-gray-700 mb-2">{task.description}</p>
+                <p className="text-xs text-gray-500 mb-2">
+                  Created At {formatDate(task.created_at)}
+                </p>
+                <p className="text-xs text-gray-500 mb-2">
+                  Completed At {formatDate(task.finished_at)}
+                </p>
+                <p
+                  className={`text-xs ${
+                    isDeadlineNear(task.deadline) ? 'text-red-500' : 'text-gray-500'
+                  }`}
+                >
+                  Deadline {formatDate(task.deadline)}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
