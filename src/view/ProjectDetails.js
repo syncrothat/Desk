@@ -13,8 +13,7 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
       try {
         const projectData = await fetchProjectDetails(projectId);
         setProject(projectData.data);
-        const taskData = await fetchProjectTasks(projectId);
-        setTasks(taskData.data.tasks || []);
+        await loadTasks();
       } catch (error) {
         if (error.response && (error.response.status === 404 || error.response.status === 500)) {
           setError('Project not found');
@@ -26,6 +25,15 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
 
     getProjectDetails();
   }, [projectId]);
+
+  const loadTasks = async () => {
+    try {
+      const taskData = await fetchProjectTasks(projectId);
+      setTasks(taskData.data.tasks || []);
+    } catch (error) {
+      console.error('Error loading tasks:', error);
+    }
+  };
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -48,10 +56,7 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
         icon: 'success',
         confirmButtonText: 'OK'
       });
-      const updatedTasks = tasks.map(task => 
-        task.taskid === taskId ? { ...task, is_completed: true } : task
-      );
-      setTasks(updatedTasks);
+      await loadTasks();
     } catch (error) {
       console.error('Error completing task:', error);
       Swal.fire({
@@ -68,14 +73,11 @@ const ProjectDetails = ({ projectId, onBack, onInviteMember, onCreateTask }) => 
       await deleteTasks(taskId);
       Swal.fire({
         title: 'Success!',
-        text: 'Task deleting successfully!',
+        text: 'Task deleted successfully!',
         icon: 'success',
         confirmButtonText: 'OK'
       });
-      const updatedTasks = tasks.map(task => 
-        task.taskid === taskId ? { ...task, is_completed: true } : task
-      );
-      setTasks(updatedTasks);
+      await loadTasks();
     } catch (error) {
       console.error('Error deleting task:', error);
       Swal.fire({
