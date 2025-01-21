@@ -1,5 +1,5 @@
 // App.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './style/App.css';
 import Sidebar from './utils/Sidebar';
 import ProjectList from './view/Projects';
@@ -12,6 +12,7 @@ import InviteMember from './view/InviteMember';
 import ProjectDetails from './view/ProjectDetails';
 import CreateTask from './view/CreateTask';
 import { fetchUserProfile, fetchProjects, fetchTasks } from './utils/apiService';
+import Token from './config/Token';
 
 function App() {  
   const [selectedView, setSelectedView] = useState('home');
@@ -72,6 +73,59 @@ function App() {
       setSelectedView(view);
     }, 150);
   };
+
+  async function subscribeUserToPush() {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: 'BJtwvMJIq6_p7Z7hjxkGqicX2Az1sIW2m4oM8TbWYrF2TTCsu7FOJDw3Aa_gNpneSDrntAPsfIp5kQQ8ii_LZMw',
+      });
+
+      console.log('Push subscription:', subscription);
+
+      await fetch('https://api.sync2.buxxed.me/api/protected/webnotif/subscribe', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${Token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(subscription),
+      });
+    } catch (error) {
+      console.error('Failed to subscribe to push notifications:', error);
+    }
+  }
+
+  const askNotificationPermission = useCallback(async () => {
+    const storedPermission = localStorage.getItem('notification-permission');
+    if (storedPermission === 'granted' || storedPermission === 'denied') {
+      console.log('Permission already handled:', storedPermission);
+      return;
+    }
+
+    if (!('Notification' in window)) {
+      console.error('This browser does not support notifications.');
+      return;
+    }
+
+    const permission = await Notification.requestPermission();
+    localStorage.setItem('notification-permission', permission);
+
+    if (permission === 'granted') {
+      console.log('Notification permission granted!');
+      subscribeUserToPush();
+    } else if (permission === 'denied') {
+      console.warn('Notification permission denied.');
+    } else {
+      console.log('Notification permission closed without granting.');
+    }
+  }, []);
+
+  useEffect(() => {
+    askNotificationPermission();
+  }, [askNotificationPermission]);
 
   const handleProjectClick = (projectId) => {
     if (projectId === 'createProject') {
