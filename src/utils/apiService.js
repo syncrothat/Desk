@@ -119,3 +119,15 @@ export const deleteProjects = async (projectId) => {
     throw error;
   }
 };
+
+export const fetchUserProfileById = async (userId) => {
+  try {
+    const token = Token;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await axios.get(`${baseAPIURL}/api/protected/profile/pub/${userId}`, { headers });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
