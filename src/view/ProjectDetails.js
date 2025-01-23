@@ -110,10 +110,10 @@ const ProjectContent = ({ project, tasks, isAdmin, onCreateTask, onTaskCompletio
             {Array.isArray(incompleteTasks) && incompleteTasks.map((task) => (
               <div
                 key={task.taskid}
-                className="bg-white rounded-xl shadow-md p-4 border border-gray-200"
+                className="bg-white rounded-xl shadow-md p-4 border border-gray-200 flex flex-col"
               >
                 <h3 className="text-lg font-semibold mb-1">{task.title}</h3>
-                <p className="text-gray-700 mb-2">{task.description}</p>
+                <p className="text-gray-700 mb-2 break-words">{task.description}</p> {/* Added break-words */}
                 <p className="text-xs text-gray-500 mb-2">
                   Created At {formatDate(task.created_at)}
                 </p>
@@ -124,18 +124,14 @@ const ProjectContent = ({ project, tasks, isAdmin, onCreateTask, onTaskCompletio
                 >
                   Deadline {formatDate(task.deadline)}
                 </p>
-                <div className="info">
-                  <div className="info-item">
-                    <button onClick={() => onTaskCompletion(task.taskid)}>
-                      <span className="material-icons sidebar-icons text-md">check</span>
-                    </button>
-                  </div>
+                <div className="info mt-auto flex justify-between">
+                  <button onClick={() => onTaskCompletion(task.taskid)} className="flex items-center">
+                    <span className="material-icons sidebar-icons text-md">check</span>
+                  </button>
                   {isAdmin && (
-                    <div className="info-item">
-                      <button onClick={() => onDeleteTask(task.taskid)}>
-                        <span className="material-icons sidebar-icons text-md">delete</span>
-                      </button>
-                    </div>
+                    <button onClick={() => onDeleteTask(task.taskid)} className="flex items-center">
+                      <span className="material-icons sidebar-icons text-md">delete</span>
+                    </button>
                   )}
                 </div>
               </div>
@@ -160,10 +156,10 @@ const ProjectContent = ({ project, tasks, isAdmin, onCreateTask, onTaskCompletio
             {Array.isArray(completedTasks) && completedTasks.map((task) => (
               <div
                 key={task.taskid}
-                className="bg-white rounded-xl shadow-md p-4 border border-gray-200"
+                className="bg-white rounded-xl shadow-md p-4 border border-gray-200 flex flex-col"
               >
                 <h3 className="text-lg font-semibold mb-1">{task.title}</h3>
-                <p className="text-gray-700 mb-2">{task.description}</p>
+                <p className="text-gray-700 mb-2 break-words">{task.description}</p> {/* Added break-words */}
                 <p className="text-xs text-gray-500 mb-2">
                   Created At {formatDate(task.created_at)}
                 </p>
