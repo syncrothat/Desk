@@ -6,6 +6,10 @@ const Sidebar = ({ onSelect, setIsSidebarOpen, selectedView }) => {
     onSelect(view);
     setIsSidebarOpen(false);
   };
+  const handleLogout = () => {
+    localStorage.removeItem('iss_token');
+    window.location.href = 'https://syncroapp.github.io/login';
+  };
 
   return (
     <div className="sidebar">
@@ -46,6 +50,12 @@ const Sidebar = ({ onSelect, setIsSidebarOpen, selectedView }) => {
         onClick={() => handleMenuClick('task')}
       >
         <span className="material-icons sidebar-icons text-base">sort</span>Tasks
+      </button>
+      <button
+        className="py-4 px-4 rounded-full sidebar-menu mt-auto bg-red-500 text-white"
+        onClick={handleLogout}
+      >
+        <span className="material-icons sidebar-icons text-base">logout</span>Logout
       </button>
     </div>
   );
