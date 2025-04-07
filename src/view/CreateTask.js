@@ -24,7 +24,7 @@ const CreateTask = ({ projectId, onTaskCreated }) => {
     e.preventDefault();
     try {
       await axios.post(
-        'https://api.sync2.buxxed.me/api/protected/task',
+        'https://apisync.herobuxx.me/api/protected/task',
         formData,
         {
           headers: {

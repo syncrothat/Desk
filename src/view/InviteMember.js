@@ -43,7 +43,7 @@ const InviteMember = ({ projectId, onMemberAdded }) => {
 
     try {
       await axios.post(
-        `https://api.sync2.buxxed.me/api/protected/project/invite/${projectId}`,
+        `https://apisync.herobuxx.me/api/protected/project/invite/${projectId}`,
         members,
         {
           headers: {

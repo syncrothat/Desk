@@ -26,7 +26,7 @@ const CreateProfile = ({ onProfileCreated }) => {
     e.preventDefault();
     try {
       await axios.post(
-        'https://api.sync2.buxxed.me/api/protected/profile',
+        'https://apisync.herobuxx.me/api/protected/profile',
         formData,
         {
           headers: {

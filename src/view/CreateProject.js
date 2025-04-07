@@ -21,7 +21,7 @@ const CreateProject = ({ onProjectCreated }) => {
     e.preventDefault();
     try {
       await axios.post(
-        'https://api.sync2.buxxed.me/api/protected/project',
+        'https://apisync.herobuxx.me/api/protected/project',
         formData,
         {
           headers: {

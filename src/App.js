@@ -85,7 +85,7 @@ function App() {
 
       console.log('Push subscription:', subscription);
 
-      await fetch('https://api.sync2.buxxed.me/api/protected/webnotif/subscribe', {
+      await fetch('https://apisync.herobuxx.me/api/protected/webnotif/subscribe', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${Token}`,
