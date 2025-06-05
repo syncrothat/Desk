@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Token from '../config/Token';
 
-const baseAPIURL = 'https://apisync.herobuxx.me';
+const baseAPIURL = 'https://syncapi.herobuxx.me';
 
 const myProject = `${baseAPIURL}/api/protected/accounts/project`;
 const myTask = `${baseAPIURL}/api/protected/accounts/task`;
