@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/Desk/static/css/main.c55126ad.css",
+    "main.js": "/Desk/static/js/main.eccec109.js",
+    "static/media/white-no-bg.png": "/Desk/static/media/white-no-bg.195ab05564289cd2bcc8.png",
+    "index.html": "/Desk/index.html",
+    "main.c55126ad.css.map": "/Desk/static/css/main.c55126ad.css.map",
+    "main.eccec109.js.map": "/Desk/static/js/main.eccec109.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c55126ad.css",
+    "static/js/main.eccec109.js"
+  ]
+}
